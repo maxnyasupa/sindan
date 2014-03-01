@@ -6,8 +6,8 @@ require_once('src/facebook.php');
 //YOUR_APP_ID : Facebook Developerページで取得したApp ID 
 //YOUR_APP_SECRET : Facebook Developerページで取得したApp Secret 
 $config = array(
-    'appId' =--> 'YOUR_APP_ID',
-    'secret' => 'YOUR_APP_SECRET',
+    'appId' =--> '358824087590621',
+    'secret' => '765a9887838d3223ba8eb456f7c705e3',
 );
 $facebook = new Facebook($config);
 //facebookのユーザーID取得

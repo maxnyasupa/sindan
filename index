@@ -1,0 +1,13 @@
+&lt;?php
+require 'src/facebook.php';
+$facebook = new Facebook(array('appId' =&gt; '358824087590621',
+                              'secret' =&gt; '765a9887838d3223ba8eb456f7c705e3',
+                              'cookie' =&gt; true,
+                        ));
+$session = $facebook-&gt;getSession();
+$fb_uid = $facebook-&gt;getUser();
+echo 'welcome, your fb_uid is ';
+echo '&lt;span style=&quot;color:red;&quot;&gt;';
+echo $fb_uid;
+echo '&lt;/span&gt;';
+?&gt;

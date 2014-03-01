@@ -1,13 +1,36 @@
-&lt;?php
-require 'src/facebook.php';
-$facebook = new Facebook(array('appId' =&gt; '358824087590621',
-                              'secret' =&gt; '765a9887838d3223ba8eb456f7c705e3',
-                              'cookie' =&gt; true,
-                        ));
-$session = $facebook-&gt;getSession();
-$fb_uid = $facebook-&gt;getUser();
-echo 'welcome, your fb_uid is ';
-echo '&lt;span style=&quot;color:red;&quot;&gt;';
-echo $fb_uid;
-echo '&lt;/span&gt;';
-?&gt;
+<?php
+//Facebook SDKの読み込み
+require_once('src/facebook.php');
+//Facebookアプリ情報
+//ここを書き換える
+//YOUR_APP_ID : Facebook Developerページで取得したApp ID 
+//YOUR_APP_SECRET : Facebook Developerページで取得したApp Secret 
+$config = array(
+    'appId' =--> 'YOUR_APP_ID',
+    'secret' => 'YOUR_APP_SECRET',
+);
+$facebook = new Facebook($config);
+//facebookのユーザーID取得
+$user_id = $facebook->getUser();
+ 
+if($user_id) {
+    //ユーザーIDが空っぽじゃない場合
+    try {
+        //ユーザー情報を取得
+        $user_profile = $facebook->api('/me','GET');
+        //ユーザーの名前を表示
+        echo "ようこそ！" . $user_profile['name'] ."さん！";
+    } catch(FacebookApiException $e) {
+        //エラー時の処理（ログインしてね。の表示）
+        $login_url = $facebook->getLoginUrl();
+        echo '<a href="' . $login_url . '">ログイン</a>してね。';
+        //エラーログ出力
+        error_log($e->getType());
+        error_log($e->getMessage());
+    }
+} else {
+    //ユーザーIDが取得できない場合（ログインしてね。の表示）
+    $login_url = $facebook->getLoginUrl();
+    echo '<a href="' . $login_url . '">ログイン</a>してね。';
+}
+?
